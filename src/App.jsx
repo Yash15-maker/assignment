@@ -7,6 +7,8 @@ import EditUser from './components/Users/EditUser.jsx';
 import Header from './components/Layout/Header.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import { Suspense } from 'react';
+import { ToastContainer } from 'react-toastify';
+
 
 const App = () => {
   return (
@@ -27,6 +29,7 @@ const App = () => {
           </Router>
         </UserProvider>
       </AuthProvider>
+      <ToastContainer />
     </Suspense>
   );
 };
