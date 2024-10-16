@@ -9,7 +9,7 @@ const EditUser = () => {
     const navigate = useNavigate();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const { users, updateUser, fetchUserById, } = useUser();
+    const { users, updateUser, fetchUserById } = useUser();
     const [formData, setFormData] = useState({ first_name: '', last_name: '', email: '' });
 
     useEffect(() => {
@@ -21,7 +21,11 @@ const EditUser = () => {
                     setFormData({ first_name: user.first_name, last_name: user.last_name, email: user.email });
                 } else {
                     const fetchedUser = await fetchUserById(id);
-                    setFormData({ first_name: fetchedUser.data.first_name, last_name: fetchedUser.data.last_name, email: fetchedUser.data.email });
+                    setFormData({
+                        first_name: fetchedUser.data.first_name,
+                        last_name: fetchedUser.data.last_name,
+                        email: fetchedUser.data.email
+                    });
                 }
             } catch (error) {
                 console.error('Error fetching user:', error);
@@ -85,52 +89,58 @@ const EditUser = () => {
     return (
         <div className="max-w-md mx-auto">
             <h2 className="text-2xl font-bold mb-4">Edit User</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                    <label htmlFor="first_name" className="block mb-1">First Name</label>
-                    <input
-                        type="text"
-                        id="first_name"
-                        name="first_name"
-                        value={formData.first_name}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-3 py-2 border rounded"
-                    />
+            {loading ? (
+                <div className="flex justify-center items-center h-48">
+                    <div className="spinner"></div>
                 </div>
-                <div>
-                    <label htmlFor="last_name" className="block mb-1">Last Name</label>
-                    <input
-                        type="text"
-                        id="last_name"
-                        name="last_name"
-                        value={formData.last_name}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-3 py-2 border rounded"
-                    />
-                </div>
-                <div>
-                    <label htmlFor="email" className="block mb-1">Email</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleEmailChange}
-                        required
-                        className="w-full px-3 py-2 border rounded"
-                    />
-                </div>
-                {error && <div className="text-red-500">{error}</div>}
-                <button
-                    type="submit"
-                    className={`w-full text-white py-2 rounded hover:bg-blue-600 ${loading ? 'bg-gray-400' : 'bg-blue-500'}`}
-                    disabled={loading}
-                >
-                    {loading ? 'Updating...' : 'Update User'}
-                </button>
-            </form>
+            ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <label htmlFor="first_name" className="block mb-1">First Name</label>
+                        <input
+                            type="text"
+                            id="first_name"
+                            name="first_name"
+                            value={formData.first_name}
+                            onChange={handleChange}
+                            required
+                            className="w-full px-3 py-2 border rounded"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="last_name" className="block mb-1">Last Name</label>
+                        <input
+                            type="text"
+                            id="last_name"
+                            name="last_name"
+                            value={formData.last_name}
+                            onChange={handleChange}
+                            required
+                            className="w-full px-3 py-2 border rounded"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="email" className="block mb-1">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleEmailChange}
+                            required
+                            className="w-full px-3 py-2 border rounded"
+                        />
+                    </div>
+                    {error && <div className="text-red-500">{error}</div>}
+                    <button
+                        type="submit"
+                        className={`w-full text-white py-2 rounded hover:bg-blue-600 ${loading ? 'bg-gray-400' : 'bg-blue-500'}`}
+                        disabled={loading}
+                    >
+                        {loading ? 'Updating...' : 'Update User'}
+                    </button>
+                </form>
+            )}
         </div>
     );
 };
