@@ -32,7 +32,7 @@ const UserCard = ({ user, onDelete }) => {
     return (
         <div className="bg-white shadow-lg rounded-xl p-6 flex flex-col items-center">
             <div className="w-24 h-24 rounded-full overflow-hidden mb-4">
-                <img src={user.avatar} alt={`${user.first_name} ${user.last_name}`} className="w-full h-full object-cover" />
+                <img loading='lazy' src={user.avatar} alt={`${user.first_name} ${user.last_name}`} className="w-full h-full object-cover" />
             </div>
             <h3 className="text-xl font-bold text-gray-800 text-center mb-1">
                 {user.first_name} {user.last_name}
